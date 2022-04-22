@@ -46,7 +46,8 @@ return [
     */
 
     'logo' => '<b>Gitaparas</b> KLU',
-    'logo_img' => 'vendor/adminlte/dist/img/anri.png',
+    'logo_img' => 'vendor/adminlte/dist/img/lombokutara.png',
+    'logo_img_anri' => 'vendor/adminlte/dist/img/anri.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',

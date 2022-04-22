@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'List User')
+@section('title', 'dashboard')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Dashbord</h1>
+    <h1 class="m-0 text-dark">Dashboard</h1>
 @stop
 
 @section('content')
@@ -43,7 +43,7 @@
                           <!-- small box -->
                           <div class="small-box bg-warning">
                             <div class="inner">
-                              <h3>{{ $klasifikasi }}</h3>
+                              <h3>{{ $arsip }}</h3>
               
                               <p>Jumlah Arsip</p>
                             </div>
@@ -58,9 +58,9 @@
                           <!-- small box -->
                           <div class="small-box bg-danger">
                             <div class="inner">
-                              <h3>53<sup style="font-size: 20px">%</sup></h3>
+                              <h3>{{$arsip_kadaluarsa}}<sup style="font-size: 20px"></sup></h3>
               
-                              <p>Jumlah Arsip Kadlwarsa</p>
+                              <p>Jumlah Arsip Kadluarsa</p>
                             </div>
                             <div class="icon">
                               <i class="ion ion-stats-bars"></i>

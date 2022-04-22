@@ -19,7 +19,7 @@
 @endif
 
 @section('auth_header', __('adminlte::adminlte.login_message'))
-<img width="70px" height="80px" src="vendor/adminlte/dist/img/lombokutara.png" alt="logoklu.png" srcset="">
+
 @section('auth_body')
     
     <form action="{{ $login_url }}" method="post">
