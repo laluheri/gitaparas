@@ -20,8 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'roles',
         'password',
-        'instansi_id'
+        'instansi_id',
+        'username'
     ];
 
     /**
@@ -43,8 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function arsip()
-    {
-        return $this->hasMany(Arsip::class);
-    }
+    // public function arsip()
+    // {
+    //     return $this->hasMany(Arsip::class);
+    // }
 }

@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{route('offices.update', $office)}}" method="post">
+    <form action="{{route('instansi.update', $instansi)}}" method="post">
         @method('PUT')
         @csrf
     <div class="row">
@@ -17,13 +17,13 @@
 
                     <div class="form-group">
                         <label for="exampleInputName">Nama</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Nama lengkap" name="name" value="{{$office->name ?? old('name')}}">
-                        @error('name') <span class="text-danger">{{$message}}</span> @enderror
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputName" placeholder="Nama lengkap" name="nama" value="{{$instansi->nama ?? old('nama')}}">
+                        @error('nama') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{route('offices.index')}}" class="btn btn-default">
+                    <a href="{{route('instansi.index')}}" class="btn btn-default">
                         Batal
                     </a>
                 </div>

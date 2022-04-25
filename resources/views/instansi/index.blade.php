@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <a href="{{route('offices.create')}}" class="btn btn-primary mb-2">
+                    <a href="{{route('instansi.create')}}" class="btn btn-primary mb-2">
                         Tambah
                     </a>
 
@@ -25,15 +25,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($offices as $key => $office)
+                        @foreach($instansi as $key => $instansi)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$office->name}}</td>
+                                <td>{{$instansi->nama}}</td>
                                 <td>
-                                    <a href="{{route('offices.edit', $office)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('instansi.edit', $instansi)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('offices.destroy', $office)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                    <a href="{{route('instansi.destroy', $instansi)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>

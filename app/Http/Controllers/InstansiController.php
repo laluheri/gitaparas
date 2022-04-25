@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Office;
+use App\Models\Instansi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
-class OfficeController extends Controller
+class InstansiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware(function($request, $next){
+
+            if(Gate::allows('manage-instansi')) return $next($request);
+            abort(403, 'Anda tidak memiliki akses'); 
+        });
+    }
+
     public function index()
     {
-        $office = Office::all();
-        return view('offices.index',[
-            'offices' => $office
+        $instansi = Instansi::all();
+        return view('instansi.index',[
+            'instansi' => $instansi
         ]);
     }
 
@@ -27,7 +37,7 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        return view('offices.create');
+        return view('instansi.create');
     }
 
     /**
@@ -39,14 +49,14 @@ class OfficeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'nama' => 'required',
         ]);
         $array = $request->only([
-            'name',
+            'nama',
         ]);
         
-        $office = Office::create($array);
-        return redirect()->route('offices.index')
+        $instansi = Instansi::create($array);
+        return redirect()->route('instansi.index')
             ->with('success_message', 'Berhasil menambah dinas baru');
     }
 
@@ -69,11 +79,11 @@ class OfficeController extends Controller
      */
     public function edit($id)
     {
-        $office = Office::find($id);
-        if (!$office) return redirect()->route('offices.index')
+        $instansi = Instansi::find($id);
+        if (!$instansi) return redirect()->route('instansi.index')
             ->with('error_message', 'dinas dengan id'.$id.' tidak ditemukan');
-        return view('offices.edit', [
-            'office' => $office
+        return view('instansi.edit', [
+            'instansi' => $instansi
         ]);
     }
 
@@ -87,12 +97,12 @@ class OfficeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
+            'nama' => 'required',
         ]);
-        $office = Office::find($id);
-        $office->name = $request->name;
-        $office->save();
-        return redirect()->route('offices.index')
+        $instansi = Instansi::find($id);
+        $instansi->nama = $request->nama;
+        $instansi->save();
+        return redirect()->route('instansi.index')
             ->with('success_message', 'Berhasil mengubah nama dinas');
     }
 
@@ -104,12 +114,12 @@ class OfficeController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $office = Office::find($id);
+        $instansi = Instansi::find($id);
         
-        if ($id == $request->user()->id) return redirect()->route('offices.index')
+        if ($id == $request->user()->id) return redirect()->route('instansi.index')
             ->with('error_message', 'Anda tidak dapat menghapus dinas sendiri.');
-        if ($office) $office->delete();
-        return redirect()->route('offices.index')
+        if ($instansi) $instansi->delete();
+        return redirect()->route('instansi.index')
             ->with('success_message', 'Berhasil menghapus nama dinas');
     }
 }

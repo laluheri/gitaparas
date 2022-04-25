@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Office;
+use App\Models\Instansi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 
 class UserController extends Controller
@@ -14,6 +15,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware(function($request, $next){
+            
+            if(Gate::allows('manage-klasifikasi')) return $next($request);
+            abort(403, 'Anda tidak memiliki akses'); 
+
+            if(Gate::allows('manage-instansi')) return $next($request);
+            abort(403, 'Anda tidak memiliki akses'); 
+        });
+    }
+
+
     public function index()
     {
         $users = User::all();
@@ -30,9 +43,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $offices = Office::all();
+        $instansi = Instansi::all();
         return view('users.create',[
-            'offices' => $offices
+            'instansi' => $instansi
         ]);
     }
 

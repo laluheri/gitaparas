@@ -14,7 +14,7 @@
                           <!-- small box -->
                           <div class="small-box bg-info">
                             <div class="inner">
-                              <h3>{{ $users }}</h3>
+                              <h3>{{ $instansi }}</h3>
               
                               <p>Jumlah Instansi</p>
                             </div>

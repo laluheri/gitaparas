@@ -14,14 +14,15 @@ class AdministratorSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("users")->truncate();
+        // DB::table("users")->truncate();
 
         $administrator = new \App\Models\User;
-        $administrator->username = "administrator";
-        $administrator->name = "Site Administrator";
+       
+        $administrator->name = "Administrator";
         $administrator->email = "administrator@larashop.test";
-        $administrator->roles = json_encode(["ADMIN"]);
+        $administrator->role = "admin";
         $administrator->password = \Hash::make("larashop");
+        $administrator->instansi_id = 1;
 
         $administrator->save();
 

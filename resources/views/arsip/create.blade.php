@@ -22,17 +22,17 @@
                                 <input value="{{old('no_surat')}}" name="no_surat" type="text" class="form-control bg-light"
                                     id="nomorsurat" placeholder="Nomor Surat" required>
                                 <label for="kode">Asal Surat</label>
-                                    <select name="asal_surat" class="custom-select my-1 mr-sm-2 bg-light" id="inlineFormCustomSelectPref"
+                                    <select name="asal_surat" class="select2 custom-select my-1 mr-sm-2 bg-light" id="inlineFormCustomSelectPref"
                                         required>
-                                        <option value="">-- Pilih Asal Surat --</option>
+                                        <option selected="selected">-- Pilih Asal Surat --</option>
                                         @foreach($instansi as $instansi)
-                                        <option value="{{$instansi->name}}">{{$instansi->name}}</option>
+                                        <option value="{{$instansi->nama}}">{{$instansi->nama}}</option>
                                         @endforeach
                                     </select>
                                     <label for="kode">Kode Klasifikasi</label>
-                                    <select name="kode" class="custom-select my-1 mr-sm-2 bg-light" id="inlineFormCustomSelectPref"
+                                    <select name="kode" class=" select2 custom-select my-1 mr-sm-2 bg-light" id=""
                                     required>
-                                    <option value="">-- Pilih Klasifikasi Surat --</option>
+                                    <option selected="selected">-- Pilih Klasifikasi Surat --</option>
                                     @foreach($data_klasifikasi as $klasifikasi)
                                     <option value="{{$klasifikasi->kode}}">{{$klasifikasi->nama}} ( {{$klasifikasi->kode}} )
                                     </option>
@@ -73,3 +73,10 @@
             </div>
         </div>
 @stop
+
+
+@push('js')
+ <script>
+     $('.select2').select2();
+ </script>
+@endpush

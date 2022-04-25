@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Klasifikasi;
 
+use Illuminate\Support\Facades\Gate;
+
 class KlasifikasiController extends Controller
 {
     /**
@@ -12,6 +14,15 @@ class KlasifikasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware(function($request, $next){
+
+            if(Gate::allows('manage-klasifikasi')) return $next($request);
+            abort(403, 'Anda tidak memiliki akses'); 
+        });
+    }
+
     public function index()
     {
         $klasifikasi = Klasifikasi::all();

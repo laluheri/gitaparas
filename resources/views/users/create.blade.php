@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Tambah User')
+@section('title', 'tambah pengguna')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Tambah User</h1>
+    <h1 class="m-0 text-dark">Tambah Pengguna</h1>
 @stop
 
 @section('content')
@@ -22,9 +22,9 @@
                     <div class="form-group">
                         <label>Pilih Instansi</label>
                         <select class="form-control select2" style="width: 100%;" name="instansi">
-
-                          @foreach($offices as $key => $office)
-                            <option value="{{$office->id}}">{{$office->name}}</option>
+                            <option selected="selected">Pilih Instansi</option>
+                          @foreach($instansi as $key => $instansi)
+                            <option value="{{$instansi->id}}">{{$instansi->nama}}</option>
                         @endforeach
 
                         </select>
@@ -56,3 +56,9 @@
         </div>
     </div>
 @stop
+
+@push('js')
+    <script>
+        $('.select2').select2();
+    </script>
+@endpush

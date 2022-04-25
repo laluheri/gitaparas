@@ -27,7 +27,7 @@ Route::match(["GET", "POST"], "/register", function(){
     })->name("register");
     
 Route::resource('users', \App\Http\Controllers\UserController::class)->middleware('auth');
-Route::resource('offices', \App\Http\Controllers\OfficeController::class)->middleware('auth');
+Route::resource('instansi', \App\Http\Controllers\InstansiController::class)->middleware('auth');
 Route::resource('klasifikasi', \App\Http\Controllers\KlasifikasiController::class)->middleware('auth');
 Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
 Route::get('/arsip/download/{id}',[\App\Http\Controllers\ArsipController::class, 'download'])->name('arsip.download')->middleware('auth');

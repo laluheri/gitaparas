@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arsip;
-use App\Models\Klasifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,8 +44,9 @@ class ArsipController extends Controller
      */
     public function create()
     {
-        $data_klasifikasi = Klasifikasi::all();
-        $instansi = \App\Models\Office::all();
+        $data_klasifikasi = \App\Models\Klasifikasi::all();
+        // return response()->json($data_klasifikasi, 200);
+        $instansi = \App\Models\Instansi::all();
         return view('arsip.create',[
             'data_klasifikasi' => $data_klasifikasi,
             'instansi' => $instansi,
@@ -81,7 +81,7 @@ class ArsipController extends Controller
         $fileExt = \File::extension($file->getClientOriginalName());
         $fileName   = time().".".$fileExt;
         $file->move('berkas_arsip/', $fileName);
-        $suratmasuk->filemasuk  = $fileName;
+        $suratmasuk->file  = $fileName;
         $suratmasuk->user_id = Auth::user()->id;
         $suratmasuk->save();
 
@@ -136,7 +136,7 @@ class ArsipController extends Controller
 
     public function download($id){
         $file = Arsip::find($id);
-        $filePath = public_path('berkas_arsip/'.$file->filemasuk);
+        $filePath = public_path('berkas_arsip/'.$file->file);
         $fileExt = \File::extension($filePath);
         $headers = ['Content-Type: application/pdf/jpg/jpeg/png'];
         $fileName = "gitaparas-".time().'.'.$fileExt;

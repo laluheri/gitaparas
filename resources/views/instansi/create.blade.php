@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{route('offices.store')}}" method="post">
+    <form action="{{route('instansi.store')}}" method="post">
         @csrf
     <div class="row">
         <div class="col-12">
@@ -16,14 +16,14 @@
 
                     <div class="form-group">
                         <label for="exampleInputName">Nama SKPD</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputName" placeholder="Nama SKPD" name="name" value="{{old('name')}}">
-                        @error('name') <span class="text-danger">{{$message}}</span> @enderror
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputName" placeholder="Nama SKPD" name="nama" value="{{old('nama')}}">
+                        @error('nama') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                 </div>
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{route('offices.index')}}" class="btn btn-default">
+                    <a href="{{route('instansi.index')}}" class="btn btn-default">
                         Batal
                     </a>
                 </div>

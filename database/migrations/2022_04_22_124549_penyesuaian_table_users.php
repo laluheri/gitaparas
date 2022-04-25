@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKlasifikasiTable extends Migration
+class PenyesuaianTableUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateKlasifikasiTable extends Migration
      */
     public function up()
     {
-        Schema::create('klasifikasi', function (Blueprint $table) {
-            $table->id();
-            $table->String('nama');
-            $table->String('kode');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('instansi_id')->nullable();
+            $table->foreign('instansi_id')->references('id')->on('instansi');
         });
     }
 
@@ -28,6 +26,6 @@ class CreateKlasifikasiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('klasifikasis');
+        //
     }
 }

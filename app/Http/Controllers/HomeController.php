@@ -29,7 +29,7 @@ class HomeController extends Controller
         $date = date('Y-m-d');
         $user_role = \Auth::user()->role;
         $user = \Auth::user()->id;
-        
+        $instansi = \App\Models\Instansi::all()->count();
         $users = User::all()->count();
         $klasifikasi = Klasifikasi::all()->count();
 
@@ -43,6 +43,7 @@ class HomeController extends Controller
         
         return view('home',[
             'users'=> $users,
+            'instansi'=>$instansi,
             'klasifikasi'=> $klasifikasi,
             'arsip' => $arsip,
             'arsip_kadaluarsa' => $arsip_kadaluarsa,
