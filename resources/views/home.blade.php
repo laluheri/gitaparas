@@ -72,6 +72,60 @@
                
         </div>
     </div>
+
+    {{-- table jumlah arsip per opd --}}
+    <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+                  @if (Auth::user()->role == 'admin')
+                  <table class="table table-hover table-bordered table-stripped" id="example2">
+                    <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama OPD</th>
+                        <th>Jumlah Arsip</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($arsip_opd as $key => $arsip)
+                        <tr>
+                            <td>{{$key+1}}</td>
+                            <td>{{$arsip->users->name}}</td>
+                            <td>{{$arsip->total}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                  @else    
+                  <table class="table table-hover table-bordered table-stripped" id="example2">
+                      <thead>
+                      <tr>
+                          <th>No.</th>
+                          <th>Kode Klasifikasi</th>
+                          <th>Jenis Klasifikasi</th>
+                          <th>Jumlah Arsip</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      @foreach( $klasifikasi_arsip_opd as $key =>  $klasifikasi)
+                          <tr>
+                              <td>{{$key+1}}</td>
+                              <td>{{$klasifikasi->klasifikasi->kode}}</td>
+                              <td>{{$klasifikasi->klasifikasi->nama}}</td>
+                              <td>{{$klasifikasi->total}}</td>
+                          </tr>
+                      @endforeach
+                      </tbody>
+                  </table>
+                  @endif
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+    {{-- end table --}}
 @stop
 
 @push('js')

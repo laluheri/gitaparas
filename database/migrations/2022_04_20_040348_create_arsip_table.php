@@ -16,10 +16,10 @@ class CreateArsipTable extends Migration
         Schema::create('arsip', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('klasifikasi_id');
             $table->String('no_surat');
             $table->String('asal_surat');
             $table->String('isi');
-            $table->String('kode');
             $table->String('tgl_surat');
             $table->String('tgl_terima');
             $table->String('tgl_arsip');
@@ -29,6 +29,7 @@ class CreateArsipTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasi');
             
         });
     }

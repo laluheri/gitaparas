@@ -33,15 +33,17 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('manage-user', function($user){
-            if ($user->role == 'admin'){
+            if ($user->role == 'admin' || $user->role == 'user'){
                 return true;
             }
         });
+
         Gate::define('manage-klasifikasi', function($user){
             if ($user->role == 'admin'){
                 return true;
             }
         });
+        
         Gate::define('manage-instansi', function($user){
             if ($user->role == 'admin'){
                 return true;

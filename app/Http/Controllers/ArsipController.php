@@ -29,9 +29,10 @@ class ArsipController extends Controller
             $jml_arsip = Arsip::all();
         }else{
 
-            $jml_arsip = Arsip::where("user_id", Auth::user()->id)->get();
+            $jml_arsip = Arsip::with('klasifikasi')->where("user_id", Auth::user()->id)->get();
         }
 
+        // return response()->json($jml_arsip, 200);
         return view('arsip.index',[
             'jml_arsip' => $jml_arsip
         ]);
@@ -69,13 +70,18 @@ class ArsipController extends Controller
         // ]);
         $suratmasuk = new \App\Models\Arsip;
         $suratmasuk->no_surat   = $request->get('no_surat');
-        $suratmasuk->asal_surat = $request->get('asal_surat');
+        if($request->get('asal_surat') == "lainnya"){
+            $suratmasuk->asal_surat = $request->get('asal_surat_lain');    
+        }else{
+            $suratmasuk->asal_surat = $request->get('asal_surat');
+        }
         $suratmasuk->isi        = $request->get('isi');
-        $suratmasuk->kode       = $request->get('kode');
+        $suratmasuk->klasifikasi_id = $request->get('klasifikasiId');
         $suratmasuk->tgl_surat  = $request->get('tgl_surat');
         $suratmasuk->tgl_terima = $request->get('tgl_terima');
         $suratmasuk->tgl_arsip = $request->get('tgl_arsip');
-        $suratmasuk->tgl_kadaluarsa = date('Y-m-d', strtotime('+1825 days', strtotime($suratmasuk->tgl_arsip)));
+        $jra = (int)$request->get('jra')*365;
+        $suratmasuk->tgl_kadaluarsa = date('Y-m-d', strtotime('+'.$jra.'days', strtotime($suratmasuk->tgl_arsip)));
         $suratmasuk->keterangan = $request->get('keterangan');
         $file                   = $request->file('filemasuk');
         $fileExt = \File::extension($file->getClientOriginalName());
@@ -140,6 +146,7 @@ class ArsipController extends Controller
         $fileExt = \File::extension($filePath);
         $headers = ['Content-Type: application/pdf/jpg/jpeg/png'];
         $fileName = "gitaparas-".time().'.'.$fileExt;
+        \App\Models\Log::record(Auth::user(), 'Aksi download arsip', "No ".$file->no_surat." Asal ".$file->asal_surat);
         return response()->download($filePath, $fileName, $headers);
     }
 }

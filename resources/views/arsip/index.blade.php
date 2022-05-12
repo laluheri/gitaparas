@@ -19,6 +19,8 @@
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
                         <tr>
+                            <th>Kode Klasifikasi</th>
+                            <th>Jenis Surat</th>
                             <th>No. Surat</th>
                             <th>Isi</th>
                             <th>Asal</th>
@@ -28,24 +30,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($jml_arsip as $key => $jml_arsip)
-                        @if (date('Y-m-d') >= $jml_arsip->tgl_kadaluarsa)
+                        @foreach($jml_arsip as $key => $arsip)
+                        @if (date('Y-m-d') >= $arsip->tgl_kadaluarsa)
                         <tr class="bg-danger">
                         @else
                         <tr>
                         @endif                                
-                                <td>{{$jml_arsip->no_surat}}</td>
-                                <td>{{$jml_arsip->isi}}</td>
-                                <td>{{$jml_arsip->asal_surat}}</td>
-                                <td>{{$jml_arsip->tgl_surat}}</td>
-                                <td>{{$jml_arsip->tgl_terima}}</td>
+                                <td>{{$arsip->klasifikasi->kode}}</td>
+                                <td>{{$arsip->klasifikasi->nama}}</td>
+                                <td>{{$arsip->no_surat}}</td>
+                                <td>{{$arsip->isi}}</td>
+                                <td>{{$arsip->asal_surat}}</td>
+                                <td>{{$arsip->tgl_surat}}</td>
+                                <td>{{$arsip->tgl_terima}}</td>
                                 
                                 <td>
-                                   <a href="{{route('arsip.download', $jml_arsip)}}"><i class="fa fa-fw fa-download text-dark"></i></a>
+                                   <a href="{{route('arsip.download', $arsip)}}"><i class="fa fa-fw fa-download text-dark"></i></a>
                                     </a>
-                                    <a href="{{route('arsip.destroy', $jml_arsip)}}" onclick="notificationBeforeDelete(event, this)">
+                                    {{-- <a href="{{route('arsip.destroy', $arsip)}}" onclick="notificationBeforeDelete(event, this)">
                                         <i class="fa fw fa-trash text-dark"></i>
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                         @endforeach

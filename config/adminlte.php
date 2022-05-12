@@ -251,13 +251,12 @@ return [
         [
             'text'    => 'Pengaturan',
             'icon'    => 'fas fa-cogs ',
-            'can'     => 'admin-only',
             'submenu' => [
                 [
                     'text' => 'Pengguna',
                     'url'  => '/users',
                     'icon' => 'fas fa-fw fa-users',
-                    'can'  => 'admin-only',
+                    // 'can'  => 'admin-only',
                 ],
                 [
                     'text' => 'Instansi',
@@ -272,6 +271,12 @@ return [
                     'can'  => 'admin-only',
                 ],
             ],
+        ],
+        [
+            'text' => 'Logs',
+            'url'  => 'log',
+            'icon' => 'fa fa-bars',
+            'can'  => 'admin-only'
         ],
     ],
 

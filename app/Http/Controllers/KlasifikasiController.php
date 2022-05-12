@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Klasifikasi;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -59,6 +61,7 @@ class KlasifikasiController extends Controller
         ]);
        
         $klasifikasi = Klasifikasi::create($array);
+        Log::record(Auth::user(), 'Menambahkan klasifikasi surat', $array["nama"]);
         return redirect()->route('klasifikasi.index')
             ->with('success_message', 'Berhasil menambah klasifikasi surat baru');
     }
@@ -85,6 +88,7 @@ class KlasifikasiController extends Controller
         $klasifikasi = klasifikasi::find($id);
         if (!$klasifikasi) return redirect()->route('klasifikasi.index')
             ->with('error_message', 'klasifikasi dengan id'.$id.' tidak ditemukan');
+        Log::record(Auth::user(), 'Aksi Edit klasifikasi surat', "Kode ".$klasifikasi->kode." Jenis jenis ".$klasifikasi->nama);
         return view('klasifikasi.edit', [
             'klasifikasi' => $klasifikasi
         ]);
@@ -109,6 +113,7 @@ class KlasifikasiController extends Controller
         $klasifikasi->nama = $request->nama;
        
         $klasifikasi->save();
+        Log::record(Auth::user(), 'Aksi Update klasifikasi surat', "Kode ".$klasifikasi->kode." Jenis jenis ".$klasifikasi->nama);
         return redirect()->route('klasifikasi.index')
             ->with('success_message', 'Berhasil mengubah klasifikasi');
     }
@@ -124,6 +129,7 @@ class KlasifikasiController extends Controller
         $klasifikasi = Klasifikasi::find($id);
         
         if ($klasifikasi) $klasifikasi->delete();
+        Log::record(Auth::user(), 'Menambahkan klasifikasi surat', $klasifikasi->nama);
         return redirect()->route('klasifikasi.index')
             ->with('success_message', 'Berhasil menghapus klasifikasi');
     }

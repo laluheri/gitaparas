@@ -24,6 +24,10 @@ class Arsip extends Model
 
     public function users()
     {
-        return $this->hasMany(Users::class);
+        return $this->belongsTo(User::class,'user_id', 'id');
+    }
+    public function klasifikasi()
+    {
+        return $this->belongsTo(Klasifikasi::class,'klasifikasi_id', 'id');
     }
 }

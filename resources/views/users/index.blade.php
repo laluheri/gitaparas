@@ -3,7 +3,11 @@
 @section('title', 'daftar pengguna')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Daftar Pengguna</h1>
+
+    @if (Auth::user()->role == 'admin')
+        <h1 class="m-0 text-dark">Daftar Pengguna</h1>
+    @endif
+   
 @stop
 
 @section('content')
@@ -12,9 +16,11 @@
             <div class="card">
                 <div class="card-body">
 
+                    @if (Auth::user()->role == 'admin')
                     <a href="{{route('users.create')}}" class="btn btn-primary mb-2">
                         Tambah
                     </a>
+                    @endif
 
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
@@ -32,12 +38,19 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>
-                                    <a href="{{route('users.edit', $user)}}" class="btn btn-primary btn-xs">
+                                    @if (Auth::user()->role == 'admin')
+                                    <a href="{{route('users.edit', encrypt($user))}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
                                     <a href="{{route('users.destroy', $user)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
+                                    @else
+                                    <a href="{{route('users.edit', encrypt($user))}}" class="btn btn-primary btn-xs">
+                                        Ganti Password
+                                   @endif
+                                   
+                                </a>
                                 </td>
                             </tr>
                         @endforeach

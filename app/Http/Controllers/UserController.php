@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Instansi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 
 class UserController extends Controller
@@ -18,18 +20,29 @@ class UserController extends Controller
     public function __construct(){
         $this->middleware(function($request, $next){
             
+            if(Gate::allows('manage-user')) return $next($request);
+            abort(403, 'Anda tidak memiliki akses'); 
+
             if(Gate::allows('manage-klasifikasi')) return $next($request);
             abort(403, 'Anda tidak memiliki akses'); 
 
             if(Gate::allows('manage-instansi')) return $next($request);
             abort(403, 'Anda tidak memiliki akses'); 
+            
+
         });
     }
 
 
     public function index()
     {
-        $users = User::all();
+        $user_id = Auth::user()->id;
+        $role = Auth::user()->role;
+        if($role === 'admin'){
+            $users = User::all();
+        }else{
+            $users = User::where("id", Auth::user()->id)->get();
+        }
 
         return view('users.index', [
             'users' => $users
@@ -95,12 +108,18 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = Crypt::decrypt($id);
+        // $user = User::find($user);
         if (!$user) return redirect()->route('users.index')
-            ->with('error_message', 'User dengan id'.$id.' tidak ditemukan');
+            ->with('error_message', 'User dengan id'.$user.' tidak ditemukan');
+        // return response()->json($user, 200);
         return view('users.edit', [
             'user' => $user
         ]);
+    }
+
+    public function changePassword(){
+        return 'dd';
     }
 
     /**
@@ -112,18 +131,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Crypt::decrypt($id);
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            // 'name' => 'required',
+            // 'email' => 'required|email|unique:users,email,'.$decrypted_id,
             'password' => 'sometimes|nullable|confirmed'
         ]);
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
+        // $user = User::find($decrypted_id);
+        $user->name = $user->name;
+        $user->email = $user->email;
         if ($request->password) $user->password = bcrypt($request->password);
+        // return response()->json($user, 200);
         $user->save();
         return redirect()->route('users.index')
-            ->with('success_message', 'Berhasil mengubah user');
+            ->with('success_message', 'Berhasil mengubah password');
     }
 
     /**
